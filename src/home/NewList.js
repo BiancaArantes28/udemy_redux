@@ -3,7 +3,7 @@ import CustomCard from '../common/CustomCard'
 
 const NewList = () => (
     
-    <CustomCard containerClass="new-list-container">
+    <CustomCard containerClass="new-list-container" link="/lista">
         <div>
             <p className="title">Adicionar Novas Listas!</p>
         </div>
