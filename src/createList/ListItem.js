@@ -5,21 +5,21 @@ import CustomCard from '../common/CustomCard';
 
 import ListItemFooter from './ListItemFooter';
 
-const ListItem = () => (
+const ListItem = ({item, deleteProduct, toggleProduct}) => (
     <CustomCard
         link="#"
         image="http://s2.glbimg.com/P6Nn4AXYPq-K1Xek4cCKyONYYyA=/e.glbimg.com/og/ed/f/original/2014/01/15/cafe.jpg"
         containerClass="list-item"
-        footer={<ListItemFooter />}
+        footer={<ListItemFooter deleteProduct={deleteProduct} item={item}/>}
     >
         <div>
             <div className="list-item-header">
-                <Typography variant="subtitle1" componenet="h2">Café</Typography>
-                <Checkbox />
+                <Typography variant="subtitle1" componenet="h2">{item.product}</Typography>
+                <Checkbox onClick={() => toggleProduct(item.id)} checked={item.checked}/>
             </div>
             <div></div>
-            <Typography componenet="p">1 Unidade</Typography>
-            <Typography componenet="p">R$ 10.00</Typography>
+            <Typography componenet="p">{item.quantity} {item.unit}</Typography>
+            <Typography componenet="p">R$ {item.price}</Typography>
         </div>
     </CustomCard>
 )

@@ -3,7 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { InputAdornment } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-const units = ['kg', 'lt', 'un']
+const units = ['kilos', 'litros', 'unidade']
 
 class Form extends Component {
     state = {
@@ -12,6 +12,7 @@ class Form extends Component {
         quantity: '',
         unit: '',
         price: '',
+        showErrors: false,
     }
 
     handleChange = (event) => {
@@ -20,7 +21,20 @@ class Form extends Component {
 
     handleSubmit = () => {
         const { list, product, quantity, unit, price } = this.state
-        this.props.addProduct({product, quantity, unit, price}, list)
+        if (!list || !product || !quantity || !unit) {
+            this.setState({ showErrors: true });
+            
+        } else {
+            this.setState({
+                showErrors: false,
+                product: '',
+                quantity: '',
+                unit: '',
+                price: '',
+            });
+            this.props.addProduct({ product, quantity, unit, price }, list)
+        }
+        
     }
     render() {
         return (
@@ -33,6 +47,7 @@ class Form extends Component {
                         value={this.state.list}
                         onChange={this.handleChange}
                         required
+                        error={!this.state.list && this.state.showErrors}
                     />
                     <Button variant="outlined" color="secondary" onClick={this.handleSubmit}>Adicionar</Button>
                 </div>
@@ -44,6 +59,7 @@ class Form extends Component {
                         value={this.state.product}
                         onChange={this.handleChange}
                         required
+                        error={!this.state.product && this.state.showErrors}
                     />
                     <TextField
                         label="Quantidade"
@@ -52,6 +68,7 @@ class Form extends Component {
                         value={this.state.quantity}
                         onChange={this.handleChange}
                         required
+                        error={!this.state.quantity && this.state.showErrors}
                     />
                     <TextField
                         select
@@ -61,6 +78,7 @@ class Form extends Component {
                         value={this.state.unit}
                         onChange={this.handleChange}
                         required
+                        error={!this.state.unit && this.state.showErrors}
                     >
                         {units.map(option => (
                             <MenuItem key={option} value={option}>{option}</MenuItem>
